@@ -4,9 +4,12 @@
 
 **🔥 Система ежедневных достижений "Огонек" как в TikTok для PaperMC**
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple?style=flat-square)](LICENSE.md)
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.16%2B-green?style=flat-square)](https://minecraft.net)
 [![Java](https://img.shields.io/badge/Java-11%2B-blue?style=flat-square&logo=java)](https://www.java.com/)
-[![PaperMC](https://img.shields.io/badge/PaperMC-Latest-green?style=flat-square&logo=minecraft)](https://papermc.io)
-[![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square)](LICENSE)
+[![PaperMC](https://img.shields.io/badge/PaperMC-Latest-orange?style=flat-square)](https://papermc.io)
+[![maintained](https://img.shields.io/badge/maintained%3F-yes-green?style=flat-square)](https://github.com/Mukller/DailyStreak)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
 
 [English](README_EN.md) • Русский
 
