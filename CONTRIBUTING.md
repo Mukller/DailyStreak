@@ -1,19 +1,19 @@
-# Руководство для контрибьютеров (DailyStreak)
+# Руководство для контрибьютеров
 
-Спасибо за интерес к проекту DailyStreak! Этот документ описывает процесс внесения вклада.
+Спасибо за интерес к проекту! Этот документ описывает процесс внесения вклада.
 
 ## 📋 Содержание
 
 - [Кодекс поведения](#кодекс-поведения)
 - [Как начать](#как-начать)
 - [Стиль кода](#стиль-кода)
-- [Типы вклада](#типы-вклада)
+- [Коммиты](#коммиты)
 - [Pull Requests](#pull-requests)
 - [Тестирование](#тестирование)
 
 ## 🤝 Кодекс поведения
 
-Мы придерживаемся принципов вежливости и уважения:
+Мы придерживаемся принципов вежливости и уважения. Ожидаем того же от всех участников:
 
 - Будь вежлив и уважителен в общении
 - Принимай конструктивную критику
@@ -24,33 +24,37 @@
 
 ### 1. Форкни репозиторий
 
-Нажми **Fork** на странице репозитория.
+Нажми кнопку **Fork** на странице репозитория.
 
 ### 2. Клонируй свой форк
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/DailyStreak.git
-cd DailyStreak
+git clone https://github.com/YOUR_USERNAME/AdvancedSpyInventory.git
+cd AdvancedSpyInventory
 ```
 
-### 3. Добавь upstream
+### 3. Добавь upstream (оригинальный репозиторий)
 
 ```bash
-git remote add upstream https://github.com/Mukller/DailyStreak.git
+git remote add upstream https://github.com/Mukller/AdvancedSpyInventory.git
 ```
 
 ### 4. Создай ветку
 
 ```bash
+# Обновись с оригинального репозитория
 git fetch upstream
 git checkout -b feature/description upstream/main
+
+# Или для исправления багов:
+git checkout -b bugfix/description upstream/main
 ```
 
 **Правила именования веток:**
-- `feature/name` — новые функции
-- `bugfix/name` — исправление ошибок
-- `improvement/name` — улучшения
+- `feature/name-of-feature` — новые функции
+- `bugfix/name-of-bug` — исправление ошибок
 - `docs/description` — документация
+- `refactor/description` — рефакторинг кода
 
 ## 💻 Стиль кода
 
@@ -58,220 +62,185 @@ git checkout -b feature/description upstream/main
 
 ```java
 // ✅ ПРАВИЛЬНО
-public class StreakManager {
-    private final DailyStreakPlugin plugin;
-    private final StreakStorage storage;
+public class InventoryViewer {
+    private final SpyPlugin plugin;
+    private Player targetPlayer;
 
-    public StreakManager(DailyStreakPlugin plugin, StreakStorage storage) {
+    public InventoryViewer(SpyPlugin plugin, Player targetPlayer) {
         this.plugin = plugin;
-        this.storage = storage;
+        this.targetPlayer = targetPlayer;
     }
 
-    /**
-     * Получить текущую серию игрока.
-     *
-     * @param player игрок
-     * @return количество дней серии
-     */
-    public int getPlayerStreak(Player player) {
-        return storage.getStreak(player.getUniqueId());
-    }
-
-    public void incrementStreak(Player player) {
-        if (player != null) {
-            int newStreak = getPlayerStreak(player) + 1;
-            storage.setStreak(player.getUniqueId(), newStreak);
+    public void openInventory() {
+        if (targetPlayer != null) {
+            // Логика открытия инвентаря
         }
     }
 }
 
 // ❌ НЕПРАВИЛЬНО
-public class StreakManager{
-public DailyStreakPlugin p;
-public StreakStorage s;
-public StreakManager(DailyStreakPlugin p,StreakStorage s){this.p=p;this.s=s;}
-public int getStreak(Player pl){return s.getStreak(pl.getUniqueId());}
+public class InventoryViewer{
+public final SpyPlugin plugin;
+public Player p;
+public InventoryViewer(SpyPlugin p,Player tp){plugin=p;p=tp;}
+public void open(){if(p!=null){}}
 ```
 
-### Требования
+### Требования к коду
 
 - Используй **camelCase** для переменных и методов
 - Используй **PascalCase** для классов
 - Максимум **100 символов** в строке
-- Отступ — **4 пробела**
-- Добавляй JavaDoc к публичным методам
+- Отступ — **4 пробела** (или tab, см. конфиг проекта)
+- Добавляй JavaDoc комментарии к публичным методам:
+
+```java
+/**
+ * Открывает инвентарь целевого игрока для администратора.
+ *
+ * @param admin администратор, просматривающий инвентарь
+ * @param target целевой игрок
+ * @return true если инвентарь успешно открыт, иначе false
+ */
+public boolean openInventoryForAdmin(Player admin, Player target) {
+    // ...
+}
+```
 
 ### YAML конфигурация
 
 ```yaml
 # ✅ ПРАВИЛЬНО
-streak:
+plugin:
+  name: "AdvancedSpyInventory"
   enabled: true
   
   settings:
-    timezone: "UTC+3"
-    reset-time: "00:00"
-    min-playtime: 10
-
-rewards:
-  7-day: 100
-  30-day: 500
-  365-day: 5000
+    # Уведомлять игрока о просмотре инвентаря
+    notify-player: true
+    logging: true
 
 # ❌ НЕПРАВИЛЬНО
-streak: {enabled: true, tz: UTC+3}
-rewards: [7: 100, 30: 500, 365: 5000]
+plugin:
+name: AdvancedSpyInventory
+enabled: yes
+settings: {notify: true, logging: true}
 ```
 
-## 📝 Типы вклада
+## 📝 Коммиты
 
-### 1. Новые функции (Features)
+Используй понятные сообщения коммитов:
 
 ```bash
-git commit -m "feat: Add streak reset warning notification"
-git commit -m "feat: Implement daily rewards system"
+# ✅ ПРАВИЛЬНО
+git commit -m "feat: Add inventory open command with permission checks"
+git commit -m "fix: Correct player offline detection bug"
+git commit -m "docs: Update README with installation instructions"
+git commit -m "refactor: Simplify InventoryManager code"
+
+# ❌ НЕПРАВИЛЬНО
+git commit -m "fix bug"
+git commit -m "update"
+git commit -m "asdf"
 ```
 
-### 2. Исправление ошибок (Bugfixes)
+**Формат:** `<type>: <subject>`
 
-```bash
-git commit -m "fix: Correct timezone calculation for streak reset"
-git commit -m "fix: Prevent negative streak values"
-```
-
-### 3. Улучшения (Improvements)
-
-```bash
-git commit -m "improvement: Optimize streak data loading"
-git commit -m "improvement: Enhance leaderboard performance"
-```
-
-### 4. Документация (Docs)
-
-```bash
-git commit -m "docs: Update README with new commands"
-git commit -m "docs: Add configuration examples"
-```
+**Типы:**
+- `feat` — новая функция
+- `fix` — исправление ошибки
+- `docs` — обновление документации
+- `refactor` — переписывание кода без смены функционала
+- `test` — добавление или обновление тестов
+- `perf` — улучшение производительности
 
 ## 🔄 Pull Requests
 
 ### Перед созданием PR
 
-1. ✅ Код компилируется без ошибок
-2. ✅ Функция протестирована на сервере
-3. ✅ Обновлена документация (если нужно)
-4. ✅ Обновлена конфигурация (если нужно)
+1. ✅ Убедись, что код компилируется без ошибок
+2. ✅ Протестируй функцию на игровом сервере
+3. ✅ Обновись с `upstream/main`
+4. ✅ Удали лишние коммиты (`git rebase`)
+
+### Создание PR
+
+```bash
+# Запушь свою ветку
+git push origin feature/your-feature
+
+# Перейди на GitHub и создай Pull Request
+```
 
 ### Описание PR
 
 ```markdown
 ## Описание
-Краткое описание того, что делает этот PR.
+Краткое описание того, что делает PR.
 
 ## Тип изменения
 - [ ] Новая функция
 - [x] Исправление ошибки
-- [ ] Улучшение производительности
+- [ ] Breaking change
 - [ ] Обновление документации
 
 ## Как это тестировалось?
-1. Запустил сервер на PaperMC X.X.X
-2. Выполнил команду `/streak top`
-3. Проверил логи на ошибки
-
-## Связанные Issues
-Closes #123
+Опишите, как ты тестировал изменения:
+1. Запустил сервер на версии X.X.X
+2. Выполнил команду `/spy PlayerName`
+3. Проверил логи
 
 ## Чек-лист
-- [x] Код следует стилю проекта
-- [x] Код протестирован
-- [x] Документация обновлена
-- [x] Нет breaking changes
+- [x] Мой код следует стилю проекта
+- [x] Я провел самопроверку
+- [x] Я обновил документацию (если нужно)
+- [x] Код компилируется без ошибок
 ```
 
 ## 🧪 Тестирование
 
-### Что нужно тестировать
-
-- ✅ Команды `/streak`, `/streak top`, `/streak <player>`
-- ✅ Система сохранения данных
-- ✅ Корректность сброса серии
-- ✅ Выдача наград
-- ✅ Конфигурация и её перезагрузка
-- ✅ Совместимость с другими плагинами
-
 ### Локальное тестирование
 
+1. Скомпилируй плагин:
 ```bash
-# Компилируем
 mvn clean package
-
-# Копируем на тестовый сервер
-cp target/DailyStreak-*.jar ~/test-server/plugins/
-
-# Запускаем и тестируем функцию
+# или gradle build
 ```
 
-## 🐛 Отчёты об ошибках
-
-Если нашел баг, создай Issue с:
-
-```
-Версия плагина: X.X.X
-Версия PaperMC: X.X.X
-Java версия: 11/17/21
-
-Описание проблемы:
-[Подробное описание]
-
-Шаги для воспроизведения:
-1. ...
-2. ...
-3. ...
-
-Ожидаемое поведение:
-[Что должно было произойти]
-
-Текущее поведение:
-[Что произошло на самом деле]
-
-Логи ошибок:
-[Ошибки из консоли/логов]
+2. Скопируй JAR в тестовый сервер:
+```bash
+cp target/AdvancedSpyInventory-*.jar ~/test-server/plugins/
 ```
 
-## 💡 Типичные улучшения
+3. Запусти сервер и протестируй функцию
 
-### Идеи для PR
+### Что нужно тестировать
 
-- 🎨 Улучшение визуального отображения "огонька"
-- 📊 Более подробная статистика
-- 🎁 Новые типы наград
-- 🌍 Поддержка новых языков
-- ⚡ Оптимизация производительности
-- 🔐 Улучшение безопасности
-
-### Перед работой над идеей
-
-Создай Issue с идеей и жди обратной связи. Так мы избежим дублирования работы!
+- ✅ Команда `/spy <player>` работает
+- ✅ Команда не работает без разрешений
+- ✅ Плагин корректно обрабатывает оффлайн игроков
+- ✅ Конфиг правильно загружается
+- ✅ Нет ошибок в консоли
 
 ## 📖 Документация
 
-При добавлении функции обновляй:
+При добавлении новой функции обновляй документацию:
 
-- **README.md** — описание команд
-- **Inline комментарии** — в коде
-- **config.yml** — новые параметры
+- **README.md** — основное описание
 - **CHANGELOG.md** — если существует
+- **Inline комментарии** — в самом коде
 
 ## ❓ Вопросы?
 
-- Проверь существующие [Issues](https://github.com/Mukller/DailyStreak/issues)
-- Создай новый Issue с пометкой `question`
-- Смотри раздел [Support](README.md#-поддержка) в README
+Если у тебя есть вопросы:
+
+1. Проверь существующие [Issues](https://github.com/Mukller/AdvancedSpyInventory/issues)
+2. Создай новый Issue с пометкой `question`
+3. Обратись в Discussions (если включены)
 
 ## 🎉 Спасибо!
 
-Благодарим за вклад в развитие проекта! 🔥
+Большое спасибо за внесение вклада в проект! Каждый вклад важен для сообщества.
 
 ---
 
