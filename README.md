@@ -1,8 +1,305 @@
 <div align="center">
 
-[English](README_EN.md) • **Русский**
+[![License: MIT](https://img.shields.io/badge/License-MIT-purple?style=flat-square)](LICENSE.md)
+[![maintained](https://img.shields.io/badge/maintained%3F-yes-green?style=flat-square)](https://github.com/Mukller/DailyStreak)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
+
+### 🌐 Язык / Language
+
+**Нажми, чтобы развернуть нужный язык · Click to expand your language**
 
 </div>
+
+<details open>
+<summary><b>🇬🇧 English</b></summary>
+
+<br>
+
+# DailyStreak
+
+<div align="center">
+
+**🔥 A daily-achievement "streak" system like TikTok's, for PaperMC**
+
+[![Java](https://img.shields.io/badge/Java-11%2B-blue?style=flat-square&logo=java)](https://www.java.com/)
+[![PaperMC](https://img.shields.io/badge/PaperMC-Latest-green?style=flat-square&logo=minecraft)](https://papermc.io)
+[![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square)](LICENSE)
+
+</div>
+
+## 📌 Description
+
+DailyStreak is an innovative PaperMC plugin that adds a daily-achievement and "streak" system to your server. Inspired by the popular TikTok feature, it motivates players to log in every day and creates a sense of progress and achievement.
+
+## ✨ Features
+
+- 🔥 **Streak system** — tracks daily activity
+- 📊 **Leaderboard** — competition among players
+- 🎁 **Streak rewards** — encourages player loyalty
+- 💾 **Persistent data** — progress is saved between sessions
+- ⚙️ **Full configuration** — tune it for your server
+- 🌍 **Russian localization** — full Russian language support
+- 📈 **Statistics and analytics** — track player progress
+- 🎨 **Nice UI** — visual display of the streak
+
+## 🚀 Quick start
+
+### Requirements
+
+- **Java**: 11 or higher
+- **PaperMC**: latest version recommended
+- **Admin rights** on the server
+
+### Installation
+
+1. Download the latest plugin version (`.jar` file)
+2. Place the file into your server's `plugins/` folder
+3. Reload the server with `/reload` or restart it
+4. The plugin is ready to go!
+
+```bash
+# Reload the configuration
+/reload
+```
+
+## 📖 Usage
+
+### Main commands
+
+```
+/streak                    # Show your streak and stats
+/streak <name>             # Show another player's streak
+/streak top                # Top 10 players by streak
+/streak help               # Command help
+```
+
+**Examples:**
+```
+/streak                    # Show my streak
+/streak PlayerName         # Show PlayerName's streak
+/streak top                # Show the server leaders
+```
+
+### Automatic tracking
+
+The plugin **automatically** tracks:
+- ✅ A player logging in (each day)
+- ✅ Active in-game time
+- ✅ Keeping the streak going
+- ✅ Resetting the streak when a day is missed
+
+## ⚙️ Configuration
+
+On first launch the plugin creates `config.yml` in `plugins/DailyStreak/`.
+
+### Example config.yml
+
+```yaml
+# Main settings
+settings:
+  # Enable the plugin
+  enabled: true
+  
+  # Server timezone (UTC, UTC+1, UTC+3, etc.)
+  timezone: "UTC+3"
+  
+  # Daily streak reset time (hours:minutes)
+  reset-time: "00:00"
+  
+  # Required online time to keep the streak (in minutes)
+  min-playtime: 10
+
+# Streak rewards
+rewards:
+  # Reward for a 7-day streak
+  7-day: 100
+  # Reward for a 30-day streak
+  30-day: 500
+  # Reward for a 365-day streak
+  365-day: 5000
+
+# Messages (customization)
+messages:
+  prefix: "&8[&f⭐ DailyStreak&8]"
+  
+  # Welcome on login
+  welcome: "&aWelcome! Your streak: &f{streak}🔥"
+  
+  # Message when a day is missed
+  streak-lost: "&cYou lost your streak! Start again from day 1"
+  
+  # Message when a reward is earned
+  reward-earned: "&6🎁 You earned a reward for a &f{days}&6-day streak!"
+
+# Database
+database:
+  # Type: SQLite, MySQL, PostgreSQL
+  type: "SQLite"
+  
+  # MySQL/PostgreSQL (if used)
+  host: "localhost"
+  port: 3306
+  name: "minecraft"
+  user: "root"
+  password: "password"
+```
+
+Edit the file to suit your needs and use `/streak reload` to apply changes.
+
+## 🔐 Permissions
+
+```
+dailystreak.use              # Basic use of the /streak command
+dailystreak.view-others      # View other players' streaks
+dailystreak.view-top         # View the leaderboard
+dailystreak.admin            # Admin commands
+dailystreak.reload           # Reload the configuration
+dailystreak.reset            # Reset a player's streak
+```
+
+### Example with LuckPerms
+
+```
+/lp user <username> permission set dailystreak.use true
+/lp user <username> permission set dailystreak.view-others true
+/lp user <username> permission set dailystreak.view-top true
+```
+
+## 🎮 How does it work?
+
+### Streak system
+
+1. **Day 1** 🔥 — the player logs in for the first time
+2. **Day 2** 🔥🔥 — the player logs in the next day
+3. **Day 3** 🔥🔥🔥 — and so on...
+4. **A missed day** ❌ — the streak resets, starting from 1 🔥
+
+### Rewards
+
+- **7 days** in a row → get a reward (100 coins/points by default)
+- **30 days** in a row → a big reward (500 coins/points)
+- **365 days** in a row → a legendary reward (5000 coins/points)
+
+*Rewards are configurable in the config*
+
+## 📊 Admin commands
+
+```
+/streak reset <player>       # Reset a player's streak
+/streak set <player> <days>  # Set a player's streak
+/streak reload               # Reload the config
+/streak stats <player>       # Show a player's full stats
+```
+
+## 🐛 Common issues
+
+### The streak isn't saved
+
+1. Check that files are saved in `plugins/DailyStreak/`
+2. Make sure the database works correctly
+3. Check the permissions on the plugin folder
+
+### The /streak command doesn't work
+
+- Check the permissions (`dailystreak.use`)
+- Make sure the plugin is enabled in config.yml (`enabled: true`)
+- Reload the plugin: `/reload`
+
+### Rewards aren't granted
+
+- Check that reward values are set in config.yml
+- Make sure an economy system is installed (Vault + EssentialsEco)
+- Check the plugin logs for errors
+
+## 📊 Versioning
+
+The project uses [Semantic Versioning](https://semver.org/):
+- **MAJOR** — incompatible changes
+- **MINOR** — new features, backward compatible
+- **PATCH** — bug fixes
+
+## 🤝 Contributing
+
+We welcome any improvements! If you want to help:
+
+1. **Fork** the repository
+2. **Create a branch** for your feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** the branch (`git push origin feature/AmazingFeature`)
+5. **Open a Pull Request**
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## 📝 License
+
+This project is distributed under the **MIT** license. See the [LICENSE](LICENSE) file for details.
+
+**Key points:**
+- ✅ You can use it commercially
+- ✅ You can modify it
+- ✅ You can distribute it
+- ❌ Attribution and the license notice are required
+
+## 👤 Author
+
+**Mukller**  
+GitHub: [@Mukller](https://github.com/Mukller)
+
+## 📮 Support
+
+If you have questions or found a bug:
+
+1. Check [Issues](https://github.com/Mukller/DailyStreak/issues) — there may already be a solution
+2. Create a new [Issue](https://github.com/Mukller/DailyStreak/issues/new) with a detailed description
+3. Include the plugin and PaperMC version
+
+**When creating an Issue, include:**
+```
+Plugin version: X.X.X
+PaperMC version: X.X.X
+Java version: 11/17/21
+Problem description: ...
+```
+
+## 🎮 Compatibility
+
+| Version | Status |
+|--------|--------|
+| 1.20+ | ✅ Full support |
+| 1.19 | ✅ Supported |
+| 1.18 | ⚠️ Possible issues |
+| < 1.18 | ❌ Not supported |
+
+## 📚 Extra resources
+
+- [PaperMC Docs](https://docs.papermc.io/)
+- [Bukkit API](https://hub.spigotmc.org/javadocs/bukkit/)
+- [SpigotMC (plugin downloads)](https://www.spigotmc.org/)
+- [Vault (for economy)](https://www.spigotmc.org/resources/vault.34315/)
+
+## 🌟 Highlights
+
+- ⚡ **Light and fast** — doesn't strain the server
+- 🔐 **Secure** — protection against cheating and manipulation
+- 📱 **Mobile-minded** — inspired by modern trends
+- 🎯 **Gamification** — motivates players to return
+
+---
+
+<div align="center">
+
+Made with ❤️ by Mukller
+
+⭐ If the project helped, give it a star!
+
+</div>
+
+</details>
+
+<details>
+<summary><b>🇷🇺 Русский</b></summary>
+
+<br>
 
 # DailyStreak
 
@@ -283,3 +580,5 @@ Made with ❤️ by Mukller
 ⭐ Если проект помог, поставь звезду!
 
 </div>
+
+</details>
