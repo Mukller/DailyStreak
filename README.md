@@ -14,7 +14,6 @@
 [![PaperMC](https://img.shields.io/badge/PaperMC-Latest-green?style=flat-square&logo=minecraft)](https://papermc.io)
 [![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square)](LICENSE)
 
-[English](README_EN.md) • Русский
 
 </div>
 
